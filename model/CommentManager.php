@@ -27,21 +27,22 @@ class CommentManager extends Manager
     public function getComment($commentId)
     {
         $db = $this->dbConnect();
-        $comment = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr 
+        $req = $db->prepare('SELECT id, author, comment, post_id, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr 
                                     FROM commentaires 
                                     WHERE id = ?');
-        $comment->execute(array($commentId));
+        $req->execute(array($commentId));
+        $comment = $req->fetch();
 
         return $comment;
     }
 
-    public function modifyComment($author, $comment, $commentId)
+    public function updateComment($author, $comment, $commentId)
     {
         $db = $this->dbConnect();
-        $comment = $db->prepare('UPDATE commentaires 
+        $req = $db->prepare('UPDATE commentaires 
                                     SET author = ?, comment = ?, comment_date = NOW()
                                     WHERE id = ?');
-        $affectedLines = $comment->execute(array($author, $comment, $commentId));
+        $affectedLines = $req->execute(array($author, $comment, $commentId));
 
         return $affectedLines;
     }

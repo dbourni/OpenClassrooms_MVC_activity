@@ -35,3 +35,26 @@ function addComment($postId, $author, $comment)
         header('Location: index.php?action=post&id=' . $postId);
     }
 }
+
+function modifyComment($commentId)
+{
+    $commentManager = new CommentManager();
+
+    $comment = $commentManager->getComment($_GET['id']);
+
+    require('view\frontend\commentView.php');
+}
+
+function updateComment($commentId, $author, $comment, $post_id)
+{
+    $commentManager = new CommentManager();
+    $affectedLines = $commentManager->updateComment($author, $comment, $commentId);
+
+    if ($affectedLines === false) {
+        throw new Exception('Impossible de modifier le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=post&id=' . $post_id);
+        //require('view\frontend\listPostsView.php');
+    }
+}
