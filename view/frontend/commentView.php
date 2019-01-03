@@ -3,6 +3,8 @@
 <?php ob_start(); ?>
 <h1>Mon super blog !</h1>
 
+<h2>Modification d'un commentaire</h2>
+
 <form action="index.php?action=updateComment&amp;id=<?= $comment['id'] ?>" method="post">
             <div>
                 <label for="author">Auteur</label><br />

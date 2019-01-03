@@ -1,4 +1,6 @@
 <?php
+namespace dbourni\blog2\model;
+
 require_once("model/Manager.php");
 
 class PostManager extends Manager
